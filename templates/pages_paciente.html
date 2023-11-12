@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css_paciente.css') }}">
+    
+    <title>Paciente</title>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <script type="text/javascript">
+            var category = "{{ messages[0][0] }}"; 
+            var message = "{{ messages[0][1] }}";
+            alert(message); 
+            if (category === 'success') {
+                document.getElementById('registroForm').reset();
+            }
+        </script>
+    {% endif %}
+{% endwith %}
+
+    <div class="container">
+        <div class="registro-box">
+            <h2>Registro de Paciente</h2>
+
+            <form action="/registro_paciente" method="post" id="registroForm"> 
+                <div class="input-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" maxlength="50" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="nit">NIT:</label>
+                    <input type="number" id="nit" name="nit" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="edad">Edad:</label>
+                    <input type="number" id="edad" name="edad" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="sexo">Sexo:</label>
+                    <select id="sexo" name="sexo" required>
+                        <option value="">Seleccione...</option>
+                        <option value="femenino">Femenino</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="altura">Altura (cm):</label>
+                    <input type="number" id="altura" name="altura" step="0.01" required>
+                </div>
+
+                <center><button type="submit">Registrar</button></center>
+
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+</html>
