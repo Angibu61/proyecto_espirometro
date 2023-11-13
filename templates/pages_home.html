@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/css_home.css') }}">
+    <title>Mediconsulter Home</title>
+</head>
+
+<body>
+	<div class="main">
+		<header>
+			<div class="wrap">
+				<img src="/static/images/logo_mediconsulter.png" alt="" style="height: 100px; width: 100px;">
+				<div class="btn-menu" id="btn-menu">
+					<span class="fa fa-bars">Inicio</span>
+				</div>
+			</div>
+		</header>
+		<section class="seccion1">
+			<div class="wrap">
+				<section class="caption-main">
+					<h1>MEDICONSULTER</h1>
+					<a href="#" class="btn-view">HOME</a>
+				</section>
+			</div>
+		</section>
+
+		<div class="full-menu">
+			<div class="wrap">
+				<nav class="navegacion">
+					<ul class="menu-principal">
+						<li><a href="#">Nosotros</a></li>
+						<li><a href="#">Registro de paciente</a></li>
+						<li><a href="#">Registro de mediciones</a></li>
+                        <li><a href="#">Historial de paciente</a></li>
+					</ul>
+					<div class="social-items">
+						<a href="#" class="fa fa-youtube-play"></a>
+						<a href="#" class="fa fa-facebook"></a>
+						<a href="#" class="fa fa-twitter"></a>
+					</div>
+				</nav>
+
+				<section class="menu-text">
+					<p>Este proyecto es un sistema digital para la salud respiratoria que utiliza un espirómetro para analizar parámetros pulmonares como FVC, PEF, FEV1, FVC/FEV1% y MEF25-75. Clasifica estos indicadores en distintas categorías de restricción u obstrucción y sugiere posibles enfermedades respiratorias. Además, facilita el registro de pacientes y el seguimiento de su historial clínico para el monitoreo continuo de su salud respiratoria.</p>
+				</section>
+			</div>
+		</div>
+	</div>
+
+	<!--JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/home_page.js') }}"></script>
+
+</body>
+
+</html>

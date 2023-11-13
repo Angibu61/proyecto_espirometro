@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/css_paciente.css') }}">
     
-    <title>Paciente</title>
+    <title>Mediconsulter Registro</title>
 </head>
 <body>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <script type="text/javascript">
-            var category = "{{ messages[0][0] }}"; 
-            var message = "{{ messages[0][1] }}";
-            alert(message); 
-            if (category === 'success') {
-                document.getElementById('registroForm').reset();
-            }
-        </script>
-    {% endif %}
-{% endwith %}
+        {% if messages %}
+            <script type="text/javascript">
+                var category = "{{ messages[0][0] }}"; 
+                var message = "{{ messages[0][1] }}";
+                alert(message); 
+                    if (category === 'success') {
+                    document.getElementById('registroForm').reset();
+                    }
+            </script>
+        {% endif %}
+    {% endwith %}
 
     <div class="container">
         <div class="registro-box">
