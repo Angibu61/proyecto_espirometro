@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Datos</title>
+</head>
+<body>
+    <form class="formulario" method="POST">
+        <div>
+            <label>Nombre del Paciente</label><input type="text" name="nombre">
+        </div>
+        <div>
+            <label>CI</label><input type="number" name="CI">
+        </div>
+        <div>
+            <label>Edad del Paciente</label><input type="number" name="edad" min="3" max="100">
+        </div>
+        <div>
+            <label>Fumador</label><input type="text" name="Fumador">
+        </div>
+        <div>
+            <label>Sexo</label><input type="text" name="Sexo">
+        </div>
+        <div>
+            <label>Peso</label><input type="text" name="Peso">
+        </div>
+        <div>
+            <br><input type="submit" value="Agregar" class="boton agregar"> <input type="button" value="Enviar" class='boton enviar'>
+        </div>
+    </form>
+     
+    <table id="listado" class='hide'>
+        <thead>
+            <th>Paciente</th>
+            <th>CI</th>
+            <th>Edad</th>
+            <th>Fumador</th>
+            <th>Sexo</th>
+            <th>Peso</th>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+     
+</body>
+</html>
+
+<script>
+    // Evento que se ejecuta al pulsar el botón agregar
+    document.querySelector("input[type=submit]").addEventListener("click",function(e){
+        // cancelamos el evento
+        e.preventDefault();
+     
+        const nombre=document.querySelector("input[name=nombre]");
+        const CI=document.querySelector("input[name=CI]");
+        const edad=document.querySelector("input[name=edad]");
+        const Fumador=document.querySelector("input[name=Fumador]");
+        const Sexo=document.querySelector("input[name=Sexo]");
+        const Peso=document.querySelector("input[name=Peso]");
+        // mostramos un error si no ha recibido el nombre
+        if (!nombre.value) {
+            nombre.classList.add("error");
+            return;
+        }
+        nombre.classList.remove("error");
+
+        // mostramos un error si no ha recibido una edad
+        if (isNaN(parseInt(CI.value)) || parseInt(CI.value)<=0) {
+            CI.classList.add("error");
+            return;
+        }
+        edad.classList.remove("error");
+     
+        // mostramos un error si no ha recibido una edad
+        if (isNaN(parseInt(edad.value)) || parseInt(edad.value)<=0) {
+            edad.classList.add("error");
+            return;
+        }
+        edad.classList.remove("error");
+
+        // mostramos un error si no ha recibido el dato Fumador
+        if (!Fumador.value) {
+            Fumador.classList.add("error");
+            return;
+        }
+        Fumador.classList.remove("error");
+        
+        // mostramos un error si no ha recibido el dato Sexo
+        if (!Sexo.value) {
+            Sexo.classList.add("error");
+            return;
+        }
+        Sexo.classList.remove("error");
+
+        if (!Peso.value) {
+            Peso.classList.add("Peso");
+            return;
+        }
+        Peso.classList.remove("error");
+     
+        agregarFila(nombre.value, CI.value, edad.value, Fumador.value, Sexo.value, Peso.value);
+        agregarInput(nombre.value, CI.value, edad.value, Fumador.value, Sexo.value, Peso.value);
+     
+        //limpiamos los valores del input
+        edad.value="";
+        CI.value="";
+        nombre.value="";
+        Fumador.value="";
+        Sexo.value="";
+        Peso.value="";
+        nombre.focus();
+        Fumador.focus();
+        Sexo.focus();
+        Peso.focus();
+     
+    });
+     
+    // Evento que se ejecuta cuando se pulsa sobre el botón enviar
+    document.querySelector(".enviar").addEventListener("click", function(e) {
+        this.closest("form").submit();
+    })
+     
+    /**
+     * Funcion para añadir el nombre y la edad en la tabla
+     *
+     * @param string nombre
+     * @param string edad
+     * @param string Fumador
+     */
+     function agregarFila(nombre, ci, edad, fumador, sexo, peso) {
+    // añadimos el paciente a la tabla creando el tr, td's y el botón para eliminarlo
+    const tr = document.createElement("tr");
+
+    const tdNombre = document.createElement("td");
+    let txt = document.createTextNode(nombre);
+    tdNombre.appendChild(txt);
+    tdNombre.className = "nombre";
+
+    const tdCI = document.createElement("td");
+    txt = document.createTextNode(ci);
+    tdCI.appendChild(txt);
+    tdCI.className = "right";
+
+    const tdEdad = document.createElement("td");
+    txt = document.createTextNode(edad);
+    tdEdad.appendChild(txt);
+    tdEdad.className = "right";
+
+    const tdFumador = document.createElement("td"); // Agregamos un nuevo td para "Fumador"
+    txt = document.createTextNode(fumador);
+    tdFumador.appendChild(txt);
+
+    const tdSexo = document.createElement("td"); // Agregamos un nuevo td para "Sexo"
+    txt = document.createTextNode(sexo);
+    tdSexo.appendChild(txt);
+
+    const tdPeso = document.createElement("td"); // Agregamos un nuevo td para "Sexo"
+    txt = document.createTextNode(peso);
+    tdPeso.appendChild(txt);
+
+    const tdRemove = document.createElement("td");
+    const buttonRemove = document.createElement("img");
+    buttonRemove.src = "garbage.png";
+    buttonRemove.onclick = eliminarFila;
+    tdRemove.appendChild(buttonRemove);
+
+    tr.appendChild(tdNombre);
+    tr.appendChild(tdCI);
+    tr.appendChild(tdEdad);
+    tr.appendChild(tdFumador); // Agregamos el nuevo td a la fila
+    tr.appendChild(tdSexo);
+    tr.appendChild(tdPeso);
+    tr.appendChild(tdRemove);
+
+    const tbody = document.getElementById("listado").querySelector("tbody").appendChild(tr);
+
+    // eliminamos la clase que tiene oculta la tabla cuando no hay ningún paciente
+    document.getElementById("listado").classList.remove("hide");
+}
+
+     
+    /**
+     * Funcion para eliminar el usuario de la tabla y llamar a la funcion
+     * para eliminar al usuario del input oculto
+     */
+    function eliminarFila(e) {
+        const tr=this.closest("tr")
+        const nombre=tr.querySelector(".nombre").innerText;
+        const edad=tr.querySelector(".right").innerText;
+     
+        eliminarInput(nombre, edad);
+        tr.remove();
+     
+        // Si no hay ningun elemento en la lista, escondemos la tabla
+        if (document.getElementById("listado").querySelector("tbody").querySelectorAll("tr").length==0) {
+            document.getElementById("listado").classList.add("hide");
+        }
+    }
+     
+    /**
+     * Funcion para crear un input oculto para cuando se envie el formulario
+     * El nombre del input es un array de valores denominado "nombres" que
+     * contiene el nombre del alumno separado por un guion medio:
+     *      juan-22
+     *      manuel-19
+     *
+     * @param string nombre
+     * @param string edad
+     */
+    function agregarInput(nombre, edad) {
+        const input=document.createElement("input");
+        input.type="hidden";
+        input.name="nombres[]";
+        input.value=nombre+"-"+edad;
+     
+        document.querySelector("form").appendChild(input);
+    }
+     
+    /**
+     * Funcion para eliminar el input oculto
+     *
+     * @param string nombre
+     * @param string edad
+     */
+    function eliminarInput(nombre, edad) {
+        const input=document.querySelector("input[type=hidden][value="+nombre+"-"+edad+"]");
+        input.remove();
+    }
+    </script>
