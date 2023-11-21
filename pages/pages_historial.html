@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabla de Datos</title>
+    <link rel="stylesheet" href="C:\Users\lmarc\Documentos\dddddd\ssss\style.css">
 </head>
 <body>
     <form class="formulario" method="POST">
@@ -17,13 +18,24 @@
             <label>Edad del Paciente</label><input type="number" name="edad" min="3" max="100">
         </div>
         <div>
-            <label>Fumador</label><input type="text" name="Fumador">
+            <label>Fumador</label>
+            <select name="Fumador">
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+            </select>
         </div>
         <div>
-            <label>Sexo</label><input type="text" name="Sexo">
-        </div>
+            <label>Sexo</label>
+            <select name="Sexo">
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+            </select>
+        </div>        
         <div>
             <label>Peso</label><input type="text" name="Peso">
+        </div>
+        <div>
+            <label>Altura</label><input type="text" name="Altura">
         </div>
         <div>
             <br><input type="submit" value="Agregar" class="boton agregar"> <input type="button" value="Enviar" class='boton enviar'>
@@ -38,6 +50,8 @@
             <th>Fumador</th>
             <th>Sexo</th>
             <th>Peso</th>
+            <th>Altura</th>
+            <th></th>
         </thead>
         <tbody>
         </tbody>
@@ -55,9 +69,10 @@
         const nombre=document.querySelector("input[name=nombre]");
         const CI=document.querySelector("input[name=CI]");
         const edad=document.querySelector("input[name=edad]");
-        const Fumador=document.querySelector("input[name=Fumador]");
-        const Sexo=document.querySelector("input[name=Sexo]");
+        const Fumador=document.querySelector("select[name=Fumador]");
+        const Sexo=document.querySelector("select[name=Sexo]");
         const Peso=document.querySelector("input[name=Peso]");
+        const Altura=document.querySelector("input[name=Altura]");
         // mostramos un error si no ha recibido el nombre
         if (!nombre.value) {
             nombre.classList.add("error");
@@ -93,14 +108,20 @@
         }
         Sexo.classList.remove("error");
 
-        if (!Peso.value) {
-            Peso.classList.add("Peso");
+        if (isNaN(parseInt(Peso.value)) || parseInt(Peso.value)<=0) {
+            Peso.classList.add("error");
             return;
         }
         Peso.classList.remove("error");
+
+        if (isNaN(parseInt(Altura.value)) || parseInt(Altura.value)<=0) {
+            Altura.classList.add("error");
+            return;
+        }
+        Altura.classList.remove("error");
      
-        agregarFila(nombre.value, CI.value, edad.value, Fumador.value, Sexo.value, Peso.value);
-        agregarInput(nombre.value, CI.value, edad.value, Fumador.value, Sexo.value, Peso.value);
+        agregarFila(nombre.value, CI.value, edad.value, Fumador.value, Sexo.value, Peso.value, Altura.value);
+        agregarInput(nombre.value, CI.value, edad.value, Fumador.value, Sexo.value, Peso.value, Altura.value);
      
         //limpiamos los valores del input
         edad.value="";
@@ -109,10 +130,10 @@
         Fumador.value="";
         Sexo.value="";
         Peso.value="";
+        Altura.value="";
         nombre.focus();
-        Fumador.focus();
-        Sexo.focus();
-        Peso.focus();
+        
+        
      
     });
      
@@ -128,7 +149,7 @@
      * @param string edad
      * @param string Fumador
      */
-     function agregarFila(nombre, ci, edad, fumador, sexo, peso) {
+     function agregarFila(nombre, ci, edad, fumador, sexo, peso, altura) {
     // añadimos el paciente a la tabla creando el tr, td's y el botón para eliminarlo
     const tr = document.createElement("tr");
 
@@ -159,6 +180,10 @@
     txt = document.createTextNode(peso);
     tdPeso.appendChild(txt);
 
+    const tdAltura = document.createElement("td");
+    txt = document.createTextNode(altura);
+    tdAltura.appendChild(txt);
+
     const tdRemove = document.createElement("td");
     const buttonRemove = document.createElement("img");
     buttonRemove.src = "garbage.png";
@@ -171,6 +196,7 @@
     tr.appendChild(tdFumador); // Agregamos el nuevo td a la fila
     tr.appendChild(tdSexo);
     tr.appendChild(tdPeso);
+    tr.appendChild(tdAltura);
     tr.appendChild(tdRemove);
 
     const tbody = document.getElementById("listado").querySelector("tbody").appendChild(tr);
